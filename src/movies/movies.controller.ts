@@ -7,6 +7,8 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
+  
+
   @Post()
   create(@Body() createMovieDto: CreateMovieDto) {
     return this.moviesService.create(createMovieDto);

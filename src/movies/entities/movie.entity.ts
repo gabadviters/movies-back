@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Review } from "src/reviews/entities/review.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('movie')
 export class Movie {
@@ -11,6 +12,12 @@ export class Movie {
 
     @Column('text')
     image:string
+
+    @Column('text')
+    genre:string
+
+    @Column('text')
+    year:string
 
     @Column('text')
     description:string
@@ -28,5 +35,8 @@ export class Movie {
   
     @DeleteDateColumn()
     delete_at: Date;
+
+    @OneToMany(()=> Review, (review)=>review.movie)
+    review:Review
 
 }

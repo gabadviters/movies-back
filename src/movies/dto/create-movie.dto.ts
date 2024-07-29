@@ -8,11 +8,20 @@ export class CreateMovieDto {
     image: string
 
     @IsString()
+    year: string
+
+    @IsString()
+    genre:string
+
+    @IsString()
     description: string
 
     @IsString()
     category: string
 
+    @IsString()
     create_at: Date;
+
+    @IsString()
     delete_at: Date;
 }

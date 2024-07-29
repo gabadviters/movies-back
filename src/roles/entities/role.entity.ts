@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('rol')
 export class Role {
@@ -15,6 +16,8 @@ export class Role {
     @DeleteDateColumn()
     delete_at: Date;
 
+    @OneToMany(()=>User, (user)=>user.role)
+    user:User
 }
 
 

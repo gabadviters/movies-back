@@ -1,53 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Login } from './entities/login.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class LoginService {
 
   constructor(
-    @InjectRepository(Login)
-    private readonly loginRepository : Repository<Login>
+    @InjectRepository(User)
+    private readonly userRepository : Repository<User>,
+    private readonly jwtService: JwtService
   ){}
 
-  create(createLoginDto: CreateLoginDto) {
-// validar y token
-    return this.loginRepository.save(createLoginDto)
+  createJWT(createLoginDto: CreateLoginDto) {
+    const data = createLoginDto
+    const token = this.jwtService.sign(data);
+
+    return {
+      token: token
+    };
   }
 
-  
-  // async createJWT(createLoginDto: CreateLoginDto) {
-  //   createLoginDto.password = hashPassword(createLoginDto.password )
+  async verifyToken(token: string) {
+    try {
+       await this.jwtService.verify(token);
+      const decoded = await this.jwtService.decode(token);
+      // const user:User = await this.userRepository.findOne(decoded.id)
+      // const same = await verifyPassword(user.password, decoded.password)
 
-  //   let pass = createLoginDto.password
+    
 
-
-  // const user = await this.userRepository.findOne({where : 
-  //   {email:createLoginDto.email, password :pass}
-  // })
-  
-  // if (!user) throw new ForbiddenException('contraseña o mail invalido')
-
-  // const payload = {email:user.email}
-  // const token = this.jwtService.sign(payload, { expiresIn: 150 });
-  
-  //   return {
-  //     token: token,
-  //   };
-
-  // }
-
-
-  // async verifyToken(token: string) {
-  //   try {
-  //     await this.jwtService.verify(token);
-  //     const decoded = await this.jwtService.decode(token);
-  //     return decoded;
-  //   } catch (error) {
-  //     throw new UnauthorizedException(error);
-  //   }
-  // }
+     return decoded;
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
+  }
+ 
 }

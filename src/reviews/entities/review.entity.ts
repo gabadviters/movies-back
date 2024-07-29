@@ -13,8 +13,8 @@ export class Review {
     @Column("text")
     calification:string
 
-    @Column("text")
-    comments:string
+    @Column("simple-array")
+    comments:string[]
 
     @CreateDateColumn()
     create_at: string

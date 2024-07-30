@@ -1,3 +1,4 @@
+import { Comment } from "src/comments/entities/comment.entity";
 import { Role } from "src/roles/entities/role.entity";
 import { UserReview } from "src/user_review/entities/user_review.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -23,4 +24,7 @@ export class User {
 
     @ManyToOne(()=> Role, (role)=>role.user)
     role:Role
+
+    @OneToMany(()=>Comment, (comments)=>comments.user)
+    comments:Comment[]
 }

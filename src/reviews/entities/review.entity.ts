@@ -1,3 +1,4 @@
+import { Comment } from "src/comments/entities/comment.entity";
 import { Movie } from "src/movies/entities/movie.entity";
 import { UserReview } from "src/user_review/entities/user_review.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -27,4 +28,7 @@ export class Review {
 
     @ManyToOne(()=> Movie, (movie)=>movie.review)
     movie: Movie
+
+    @OneToMany(()=>Comment, (commnents)=>commnents.review)
+    commnets:Comment[]
 }

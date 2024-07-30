@@ -8,9 +8,10 @@ import { RolesModule } from './roles/roles.module';
 import { UserReviewModule } from './user_review/user_review.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginModule } from './login/login.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
-  imports: [UsersModule, ReviewsModule, MoviesModule, RolesModule, UserReviewModule, 
+  imports: [UsersModule, ReviewsModule, MoviesModule, RolesModule, UserReviewModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -20,7 +21,7 @@ import { LoginModule } from './login/login.module';
       database: 'movies',
       entities: ['dist/**/*.entity.{ts,js}'],
       synchronize: true,
-    }), LoginModule,
+    }), LoginModule, CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

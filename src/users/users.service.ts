@@ -19,13 +19,14 @@ export class UsersService {
 
   async findAll() {
     return await this.userRepository.find({
-      relations:{}
+      relations:{comments:true, user_review:true}
     }) ;
   }
 
   async findOne(id: number) {
     return await this.userRepository.findOne({
-      where:{id:id}
+      where:{id:id},
+      relations:{comments:true, user_review:true}
     });
   }
 

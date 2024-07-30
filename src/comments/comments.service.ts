@@ -15,7 +15,9 @@ export class CommentsService {
   }
 
   async findAll() {
-    return await this.commnetRepository.find();
+    return await this.commnetRepository.find({
+      relations:{user:true}
+    });
   }
 
   async findOne(id: number) {

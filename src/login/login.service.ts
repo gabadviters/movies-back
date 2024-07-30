@@ -1,12 +1,9 @@
 import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Login } from './entities/login.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
-import { hashPassword } from 'src/common/utils/hashPassword.utils';
 import * as bcrypt from "bcrypt"
 
 @Injectable()
@@ -20,24 +17,30 @@ export class LoginService {
 
   async createJWT(createLoginDto: CreateLoginDto) {
 
-    const user = await this.userRepository.findOne({where :
-      {email:createLoginDto.email}
-    })
-
-    if (!user) throw new ForbiddenException('Wrong email')
-      
-    const isValid = bcrypt.compare(createLoginDto.password,user.password)
- 
-   if(!isValid) throw new BadRequestException("Wrong password!")
-
- 
-  const payload = {email:user.email}
-  const token = this.jwtService.sign(payload, { expiresIn: 150 });
-  console.log(token);
+    try {
+      const user = await this.userRepository.findOne({where :
+        {email:createLoginDto.email}
+      })
   
-    return {
-      token: token,
-    };
+      if (!user) throw new ForbiddenException('Wrong email')
+        
+      const isValid = await bcrypt.compare(createLoginDto.password,user.password)
+      console.log("comparacionpassword", isValid);
+      
+   
+     if(!isValid) throw new BadRequestException("Wrong password!")
+  
+    const payload = {email:user.email, password:user.password}
+    const token = this.jwtService.sign(payload, { expiresIn: 150 });
+    console.log(token);
+    
+      return {
+        token: token,
+      };
+    } catch (error) {
+      throw new UnauthorizedException(error)
+      
+    }
  
   }
 

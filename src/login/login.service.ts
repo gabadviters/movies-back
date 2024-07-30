@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { Login } from './entities/login.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { hashPassword } from 'src/common/utils/hashPassword.utils';
 
 @Injectable()
 export class LoginService {
@@ -16,15 +17,27 @@ export class LoginService {
     private readonly jwtService: JwtService
   ){}
 
-  createJWT(createLoginDto: CreateLoginDto) {
-    const data = createLoginDto
-    const token = this.jwtService.sign(data);
-    console.log(token);
-    
+  async createJWT(createLoginDto: CreateLoginDto) {
+     
+ 
+    let pass = await hashPassword(createLoginDto.password )
+ 
+ 
+  const user = await this.userRepository.findOne({where :
+    {email:createLoginDto.email, password :pass}
+  })
+ 
+  if (!user) throw new ForbiddenException('contraseña o mail invalido')
+ 
+  const payload = {email:user.email}
+  const token = this.jwtService.sign(payload, { expiresIn: 150 });
+ 
     return {
-      token: token
+      token: token,
     };
+ 
   }
+
 
   async verifyToken(token: string) {
     try {

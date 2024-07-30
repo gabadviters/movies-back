@@ -19,6 +19,7 @@ import { GenresModule } from './genres/genres.module';
       port: 5432,
       username: 'postgres',
       password: 'admin',
+      // password: 'cirulli',
       database: 'movies',
       entities: ['dist/**/*.entity.{ts,js}'],
       synchronize: true,

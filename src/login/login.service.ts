@@ -18,9 +18,9 @@ export class LoginService {
   ){}
 
   async createJWT(createLoginDto: CreateLoginDto) {
-     
+    createLoginDto.password = await hashPassword(createLoginDto.password )
  
-    let pass = await hashPassword(createLoginDto.password )
+    let pass = createLoginDto.password
  
  
   const user = await this.userRepository.findOne({where :
@@ -38,6 +38,15 @@ export class LoginService {
  
   }
 
+  // createJWT(createLoginDto: CreateLoginDto) {
+  //   const data = createLoginDto
+  //   const token = this.jwtService.sign(data);
+  //   console.log(token);
+    
+  //   return {
+  //     token: token
+  //   };
+  // }
 
   async verifyToken(token: string) {
     try {

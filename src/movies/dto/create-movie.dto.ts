@@ -11,9 +11,6 @@ export class CreateMovieDto {
     year: string
 
     @IsString()
-    genre:string
-
-    @IsString()
     description: string
 
     @IsString()

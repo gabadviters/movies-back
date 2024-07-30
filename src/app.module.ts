@@ -9,6 +9,7 @@ import { UserReviewModule } from './user_review/user_review.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginModule } from './login/login.module';
 import { CommentsModule } from './comments/comments.module';
+import { GenresModule } from './genres/genres.module';
 
 @Module({
   imports: [UsersModule, ReviewsModule, MoviesModule, RolesModule, UserReviewModule,
@@ -21,7 +22,7 @@ import { CommentsModule } from './comments/comments.module';
       database: 'movies',
       entities: ['dist/**/*.entity.{ts,js}'],
       synchronize: true,
-    }), LoginModule, CommentsModule,
+    }), LoginModule, CommentsModule, GenresModule,
   ],
   controllers: [AppController],
   providers: [AppService],

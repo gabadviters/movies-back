@@ -1,5 +1,6 @@
+import { Genre } from "src/genres/entities/genre.entity";
 import { Review } from "src/reviews/entities/review.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('movie')
 export class Movie {
@@ -14,9 +15,6 @@ export class Movie {
     image:string
 
     @Column('text')
-    genre:string
-
-    @Column('text')
     year:string
 
     @Column('text')
@@ -24,10 +22,6 @@ export class Movie {
 
     @Column('text')
     category:string
-
-
-    // @Column('text')
-    // review:string
 
 
     @CreateDateColumn()
@@ -39,4 +33,6 @@ export class Movie {
     @OneToMany(()=> Review, (review)=>review.movie)
     review:Review
 
+    @ManyToOne(()=> Genre, (genre)=>genre.movie)
+    genre:Genre
 }

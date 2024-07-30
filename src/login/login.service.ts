@@ -19,7 +19,8 @@ export class LoginService {
   createJWT(createLoginDto: CreateLoginDto) {
     const data = createLoginDto
     const token = this.jwtService.sign(data);
-
+    console.log(token);
+    
     return {
       token: token
     };

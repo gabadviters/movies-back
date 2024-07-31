@@ -18,7 +18,9 @@ export class MoviesService {
   }
 
   findAll() {
-   return this.movieRepository.find()
+   return this.movieRepository.find({
+    relations:{review:true}
+   })
   }
 
   findOne(id: number) {

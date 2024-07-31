@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,7 +10,18 @@ import { hashPassword } from 'src/common/utils/hashPassword.utils';
 export class UsersService {
   constructor(@InjectRepository(User) private readonly userRepository:Repository<User>){}
 
+  async emailExist(email:string){
+    const user =  await this.userRepository.findOne({
+      where:{email}
+    })
+    return user
+ }
+
   async create(createUserDto: CreateUserDto) {
+    
+    if(await this.emailExist(createUserDto.email)){
+      throw new BadRequestException("This email is already in use")
+    }
 
     const password = await hashPassword(createUserDto.password);
 
@@ -19,7 +30,7 @@ export class UsersService {
 
   async findAll() {
     return await this.userRepository.find({
-      relations:{comments:true, user_review:true}
+      relations:{comments:true, user_review:true, role:true}
     }) ;
   }
 

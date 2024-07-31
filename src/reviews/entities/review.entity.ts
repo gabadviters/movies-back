@@ -28,7 +28,7 @@ export class Review {
 
     @Column()
     movieId: number;
-    
+
     @ManyToOne(()=> Movie)
     @JoinColumn({name: 'movieId', referencedColumnName: 'id'})
     movie: Movie

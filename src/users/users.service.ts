@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository, UpdateResult } from 'typeorm';
 import { hashPassword } from 'src/common/utils/hashPassword.utils';
 
 @Injectable()
@@ -32,6 +32,13 @@ export class UsersService {
     return await this.userRepository.find({
       relations:{comments:true, user_review:true, role:true}
     }) ;
+  }
+
+  async restoreDeletedUsers(): Promise<UpdateResult> {
+    
+    return await this.userRepository.restore({
+      deleted_at:Not(IsNull())
+    });
   }
 
   async findOne(id: number) {

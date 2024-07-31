@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { User } from "src/users/entities/user.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -7,6 +8,7 @@ export class Role {
     @PrimaryGeneratedColumn('increment')
     id :number
 
+    @ApiProperty()
     @Column('text')
     role: string;
 

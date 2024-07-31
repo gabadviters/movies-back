@@ -4,7 +4,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthJWTGuard } from 'src/guards/jwtGuard.guard';
 import { UpdateResult } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("users")
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -22,6 +25,11 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get("find_deleted")
+  async obtenerTodosConSoftDeleted() {
+    return await this.usersService.obtenerTodosConSoftDeleted();
   }
 
   @Get(':id')

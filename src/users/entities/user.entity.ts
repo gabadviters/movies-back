@@ -9,7 +9,7 @@ import { Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGenerate
 export class User {
     @PrimaryGeneratedColumn("increment")
     id:number
-
+    
     @Column("text")
     user_name:string
 

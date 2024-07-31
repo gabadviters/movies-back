@@ -8,6 +8,7 @@ export class Movie {
     @PrimaryGeneratedColumn('increment')
     id:Number;
 
+   
     @Column('text')
     title:string
 

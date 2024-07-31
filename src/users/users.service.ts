@@ -41,6 +41,15 @@ export class UsersService {
     });
   }
 
+  async obtenerTodosConSoftDeleted() : Promise<User[]>{
+ 
+    const registros = await this.userRepository.createQueryBuilder("User")
+      .withDeleted()
+      .getMany();
+   
+    return registros;
+  }
+
   async findOne(id: number) {
     return await this.userRepository.findOne({
       where:{id:id},

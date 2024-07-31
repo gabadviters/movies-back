@@ -15,14 +15,14 @@ export class ReviewsService {
 
   async findAll() {
     return await this.reviewRepository.find({
-      relations:{comments:true,}
+      relations:{commnets:true}
     });
   }
 
   async findOne(id: number) {
     return await this.reviewRepository.findOne({
       where:{id:id},
-      relations:{comments:true,}
+      relations:{commnets:true}
     });
   }
 

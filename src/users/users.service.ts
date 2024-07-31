@@ -43,7 +43,7 @@ export class UsersService {
 
   async obtenerTodosConSoftDeleted() : Promise<User[]>{
  
-    const registros = await this.userRepository.createQueryBuilder("User")
+    const registros = await this.userRepository.createQueryBuilder("user")
       .withDeleted()
       .getMany();
    

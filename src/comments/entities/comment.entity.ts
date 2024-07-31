@@ -13,6 +13,6 @@ export class Comment {
     @ManyToOne(()=> User, (user)=> user.comments)
     user:User;
 
-    @ManyToOne(()=>Review, (review)=> review.comments)
+    @ManyToOne(()=>Review, (review)=> review.commnets)
     review:Review
 }

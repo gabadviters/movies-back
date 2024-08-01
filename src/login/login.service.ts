@@ -21,6 +21,8 @@ export class LoginService {
       const user = await this.userRepository.findOne({where :
         {email:createLoginDto.email}
       })
+      console.log(user);
+      
   
       if (!user) throw new ForbiddenException('Wrong email')
         
@@ -36,6 +38,9 @@ export class LoginService {
     
       return {
         token: token,
+        id: user.id,
+        userName: user.user_name,
+         role: user.role
       };
     } catch (error) {
       throw new UnauthorizedException(error)

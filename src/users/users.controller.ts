@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,6 +22,7 @@ export class UsersController {
     return await this.usersService.restoreDeletedUsers(+id);
   }
 
+  @UseGuards(AuthJWTGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -39,7 +40,9 @@ export class UsersController {
 
   @UseGuards(AuthJWTGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Req() req) {
+    console.log(req.user);
+    
     return this.usersService.update(+id, updateUserDto);
   }
 

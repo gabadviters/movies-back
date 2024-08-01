@@ -21,9 +21,9 @@ export class Review {
     delete_at: string
 
     @OneToMany(()=> UserReview, (user_review)=> user_review.review)
-    user_review: UserReview
+    user_review: UserReview[]
 
-    @Column()
+    @Column({nullable:true})
     movieId: number;
 
     @ManyToOne(()=> Movie)

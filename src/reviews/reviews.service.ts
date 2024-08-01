@@ -4,13 +4,22 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './entities/review.entity';
 import { Repository } from 'typeorm';
+import { UserReview } from 'src/user_review/entities/user_review.entity';
 
 @Injectable()
 export class ReviewsService {
-  constructor(@InjectRepository(Review) private readonly reviewRepository: Repository<Review>){}
+  constructor(@InjectRepository(Review) private readonly reviewRepository: Repository<Review>,
+  @InjectRepository(UserReview) private readonly user_reviewRepository: Repository<UserReview>
+){}
 
   async create(createReviewDto: CreateReviewDto) {
-    return await this.reviewRepository.save(createReviewDto);
+    const {movieId,...Dto} = createReviewDto
+    const userId = createReviewDto.user
+   
+    const review = await this.reviewRepository.save({...Dto, movie:movieId});
+    console.log(userId)
+     
+    return  await this.user_reviewRepository.save({user: userId, review,})
   }
 
   async findAll() {
@@ -27,7 +36,7 @@ export class ReviewsService {
   }
 
   async update(id: number, updateReviewDto: UpdateReviewDto) {
-    return await this.reviewRepository.update(id, updateReviewDto);
+    return await this.reviewRepository.update(id, updateReviewDto as any);
   }
 
   async remove(id: number) {

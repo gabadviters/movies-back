@@ -7,7 +7,7 @@ export class UserReview {
     @PrimaryGeneratedColumn("increment")
     id:number
 
-    @ManyToOne(()=>User, (user)=> user.user_review)
+    @ManyToOne(()=>User)
     user:User;
 
     @ManyToOne(()=>Review, (review)=> review.user_review)

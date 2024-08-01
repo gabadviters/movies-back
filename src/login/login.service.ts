@@ -53,12 +53,13 @@ export class LoginService {
 
   async verifyToken(token: string) {
     try {
-       await this.jwtService.verify(token);
+      await this.jwtService.verify(token);
+       
       const decoded = await this.jwtService.decode(token);
-      // const user:User = await this.userRepository.findOne(decoded.id)
-      // const same = await verifyPassword(user.password, decoded.password)
-
-    
+      
+      if (!decoded) {
+        throw new UnauthorizedException('Token decoding failed');
+      }
 
      return decoded;
     } catch (error) {

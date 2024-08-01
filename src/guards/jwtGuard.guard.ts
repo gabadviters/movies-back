@@ -10,7 +10,7 @@ export class AuthJWTGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log('Token: ' + token);
+    console.log('token: ' + token);
     if (!token) {
       throw new UnauthorizedException('token doesn´t exist');
     }

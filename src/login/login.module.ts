@@ -11,6 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
     secret: 'tu-secreto',
   }),],
   controllers: [LoginController],
-  providers: [LoginService]
+  providers: [LoginService],
+  exports:[LoginService]
 })
 export class LoginModule {}

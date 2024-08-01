@@ -32,7 +32,7 @@ export class LoginService {
    
      if(!isValid) throw new BadRequestException("Wrong password!")
   
-    const payload = {email:user.email, password:user.password}
+    const payload = {email:user.email}
     const token = this.jwtService.sign(payload, { expiresIn: 150 });
     console.log(token);
     

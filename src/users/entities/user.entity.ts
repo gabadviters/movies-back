@@ -1,7 +1,7 @@
 import { Comment } from "src/comments/entities/comment.entity";
 import { Role } from "src/roles/entities/role.entity";
 import { UserReview } from "src/user_review/entities/user_review.entity";
-import { Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -25,8 +25,15 @@ export class User {
     @OneToMany(()=> UserReview, (user_review)=> user_review.user)
     user_review:UserReview
 
+    @Column({ default: 1 })
+    roleId: number;
+
     @ManyToOne(()=> Role, (role)=>role.user)
+    @JoinColumn({name: 'roleId'})
     role:Role
+
+ 
+  
 
     @OneToMany(()=>Comment, (comments)=>comments.user)
     comments:Comment[]

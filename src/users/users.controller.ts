@@ -24,7 +24,9 @@ export class UsersController {
 
   @UseGuards(AuthJWTGuard)
   @Get()
-  findAll() {
+  findAll(@Req()req ) {
+    console.log(req.user);
+    
     return this.usersService.findAll();
   }
 

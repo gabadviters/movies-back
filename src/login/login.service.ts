@@ -40,7 +40,8 @@ export class LoginService {
         token: token,
         id: user.id,
         userName: user.user_name,
-         role: user.role
+        role: user.role,
+        email: user.email
       };
     } catch (error) {
       throw new UnauthorizedException(error)

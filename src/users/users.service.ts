@@ -34,14 +34,12 @@ export class UsersService {
     }) ;
   }
 
-  async restoreDeletedUsers(): Promise<UpdateResult> {
+  async restoreDeletedUsers(id:number): Promise<UpdateResult> {
     
-    return await this.userRepository.restore({
-      deleted_at:Not(IsNull())
-    });
+    return await this.userRepository.restore(id);
   }
 
-  async obtenerTodosConSoftDeleted() : Promise<User[]>{
+  async obtainUsersSoftDeleted() : Promise<User[]>{
  
     const registros = await this.userRepository.createQueryBuilder("user")
       .withDeleted()

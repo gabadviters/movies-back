@@ -17,9 +17,9 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Post('restore-deleted')
-  async restoreDeletedUsers(): Promise<UpdateResult> {
-    return await this.usersService.restoreDeletedUsers();
+  @Post('restore-deleted/:id')
+  async restoreDeletedUsers(@Param('id') id: number): Promise<UpdateResult> {
+    return await this.usersService.restoreDeletedUsers(+id);
   }
 
   @Get()
@@ -28,8 +28,8 @@ export class UsersController {
   }
 
   @Get("find_deleted")
-  async obtenerTodosConSoftDeleted() {
-    return await this.usersService.obtenerTodosConSoftDeleted();
+  async obtainUsersSoftDeleted() {
+    return await this.usersService.obtainUsersSoftDeleted();
   }
 
   @Get(':id')

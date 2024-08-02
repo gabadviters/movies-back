@@ -51,7 +51,7 @@ export class UsersService {
   async findOne(id: number) {
     return await this.userRepository.findOne({
       where:{id:id},
-      relations:{comments:true, user_review:true}
+      relations:["comments", "user_review", "user_review.review"]
     });
   }
 

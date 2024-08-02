@@ -22,7 +22,8 @@ export class UserReviewService {
 
   async findOne(id: number) {
     return await this.userReviewRepository.findOne({
-      where:{id:id}
+      where:{id:id},
+      relations: {review:true}
     });
   }
 

@@ -13,7 +13,7 @@ export class CreateReviewDto {
     user:User
 
     @IsNumber()
-    movieId:Movie
+    movieId:number
 
     @ApiProperty()
     @IsString()

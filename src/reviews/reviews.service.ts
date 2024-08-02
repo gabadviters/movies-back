@@ -16,8 +16,8 @@ export class ReviewsService {
     const {movieId,...Dto} = createReviewDto
     const userId = createReviewDto.user
    
-    const review = await this.reviewRepository.save({...Dto, movie:movieId});
-    console.log(userId)
+    const review = await this.reviewRepository.save({...Dto, movieId:movieId});
+    console.log(movieId)
      
     return  await this.user_reviewRepository.save({user: userId, review,})
   }

@@ -9,6 +9,8 @@ export class ReviewsController {
 
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
+    console.log(createReviewDto);
+    
     return this.reviewsService.create(createReviewDto);
   }
 
